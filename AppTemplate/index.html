@@ -5,7 +5,8 @@
     <title>My Angular 2 App!</title>
 
     <!-- css -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/main.styles.css">
+    <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.css">
     <style>body { padding: 50px 0; }</style>
 
     <!-- js -->
@@ -13,6 +14,8 @@
     <script src="node_modules/core-js/client/shim.min.js"></script>
     <script src="node_modules/zone.js/dist/zone.js"></script>
     <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <!-- load our angular app with systemjs -->
     <script src="node_modules/systemjs/dist/system.src.js"></script>
@@ -21,14 +24,9 @@
         System.import('app').catch(function(err) { console.error(err); });
     </script>
 </head>
-<body class="container">
-  <div class="container-fluid">
-    <div class="row">
-      <projects-list></projects-list>
-    </div>
-    <div class="row">
-      <my-app></my-app>
-    </div>
-  </div>
+<body>
+  <base-layout>
+    <div class="overlay"></div>
+  </base-layout>
 </body>
 </html>

@@ -11,32 +11,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var posts_service_1 = require("../services/posts.service");
-var ProjectsListComponent = (function () {
-    function ProjectsListComponent(postService) {
+var TableComponent = (function () {
+    function TableComponent(postService) {
         var _this = this;
         this.postService = postService;
-        this.onSelect = new core_1.EventEmitter();
-        this.postService.getPosts().subscribe(function (postsJson) {
-            _this.posts = postsJson;
+        this.postService.postPosts(this.selectedProject).subscribe(function (postsJson) { return console.log(postsJson); });
+        this.postService.postPosts(this.selectedProject).subscribe(function (postsJson) {
+            _this.users = postsJson;
+            _this.headers = ["id", "title", "body"];
         });
     }
-    ProjectsListComponent.prototype.select = function (project) {
-        console.log(project);
-        this.onSelect.emit(project);
-    };
-    return ProjectsListComponent;
+    return TableComponent;
 }());
 __decorate([
-    core_1.Output(),
-    __metadata("design:type", Object)
-], ProjectsListComponent.prototype, "onSelect", void 0);
-ProjectsListComponent = __decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], TableComponent.prototype, "selectedProject", void 0);
+TableComponent = __decorate([
     core_1.Component({
-        selector: 'projects-list',
-        template: "\n  <div class=\"pre-scrollable\">\n    <div #div (click)=\"select(div.innerText)\" class=\"project-list-button\" *ngFor=\"let project of posts\">\n        {{project.Title}}\n    </div>\n  </div>\n  ",
+        selector: 'main-table',
+        template: "\n    <table class=\"table table-hover\">\n      <thead>\n        <tr>\n          <th *ngFor=\"let header of headers\">{{header}}</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr *ngFor=\"let user of users\">\n          <td>{{user.ID}}</td>\n          <td>{{user.Title}}</td>\n          <td>{{user.Description}}</td>\n        </tr>\n      </tbody>\n    </table>\n  ",
         providers: [posts_service_1.PostService]
     }),
     __metadata("design:paramtypes", [posts_service_1.PostService])
-], ProjectsListComponent);
-exports.ProjectsListComponent = ProjectsListComponent;
-//# sourceMappingURL=projectslist.component.js.map
+], TableComponent);
+exports.TableComponent = TableComponent;
+//# sourceMappingURL=table.component.js.map

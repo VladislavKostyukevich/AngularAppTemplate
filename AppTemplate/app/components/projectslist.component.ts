@@ -1,22 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { PostService } from '../services/posts.service';
+import { BaseLayoutComponent } from './baselayout.component'
 
 @Component({
   selector: 'projects-list',
   template: `
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Dropdown
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-      <button *ngFor="let project of projects" class="dropdown-item" type="button">{{project}}</button>
+  <div class="pre-scrollable">
+    <div #div (click)="select(div.innerText)" class="project-list-button" *ngFor="let project of posts">
+        {{project.Title}}
     </div>
   </div>
   `,
+  providers: [PostService]
 })
 export class ProjectsListComponent{
-  projects: string[];
+  posts: Post[];
+  @Output() onSelect = new EventEmitter<string>();
 
-  constructor(){
-    this.projects = ["TestProject 1","TestProject 2","TestProject 3","TestProject 4","TestProject 5"]
+  constructor(private postService: PostService){
+      this.postService.getPosts().subscribe(postsJson =>{
+      this.posts = postsJson;
+    });
   }
+
+  select(project: string) {
+    console.log(project);
+    this.onSelect.emit(project);
+  }
+}
+
+interface Post{
+  ID: number;
+  Title: string;
+  Description: string;
+  PageCount:number;
+  Excerpt:string;
+  PublishDate: string;
 }
